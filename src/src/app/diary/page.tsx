@@ -21,6 +21,7 @@ export default function DiaryPage() {
   const { entries, cycles } = useMoodStore();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedEntry, setSelectedEntry] = useState<DiaryEntry | null>(null);
+  const [selectedCycleId, setSelectedCycleId] = useState<string | null>(null);
 
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth() + 1;
@@ -58,10 +59,12 @@ export default function DiaryPage() {
 
   const prevMonth = () => {
     setCurrentDate(new Date(year, month - 2, 1));
+    setSelectedCycleId(null);
   };
 
   const nextMonth = () => {
     setCurrentDate(new Date(year, month, 1));
+    setSelectedCycleId(null);
   };
 
   if (!hydrated) {
@@ -131,11 +134,16 @@ export default function DiaryPage() {
               }
 
               return (
-                <div
+                <button
                   key={day}
+                  onClick={() => {
+                    const dateStr2 = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                    const entry = monthEntries.find((e) => e.date === dateStr2);
+                    if (entry) setSelectedCycleId(entry.treeCycleId);
+                  }}
                   className={`h-12 flex flex-col items-center justify-between py-1 rounded-lg text-xs ${
                     isToday ? 'font-bold text-green-600' : 'text-[#4A3728]'
-                  }`}
+                  } ${hasRecord ? 'cursor-pointer hover:bg-green-50' : 'cursor-default'}`}
                 >
                   <span>{day}</span>
                   <div className="w-5 h-5 flex items-center justify-center">
@@ -153,51 +161,67 @@ export default function DiaryPage() {
                       <div />
                     )}
                   </div>
-                </div>
+                </button>
               );
             })}
           </div>
         </div>
 
-        {/* 일기 리스트 */}
-        <h2 className="text-sm font-semibold text-[#4A3728] mb-3">
-          이번 달 기록 ({monthEntries.length}건)
-        </h2>
-        {monthEntries.length === 0 ? (
-          <p className="text-sm text-[#B8A080] text-center py-8">
-            이번 달에는 아직 기록이 없어요.
-          </p>
-        ) : (
-          <div className="flex flex-col gap-3">
-            {monthEntries
-              .sort((a, b) => b.date.localeCompare(a.date))
-              .map((entry) => {
-                const emotionData = EMOTIONS.find(
-                  (e) => e.id === entry.emotion
-                );
-                return (
-                  <button
-                    key={entry.id}
-                    onClick={() => setSelectedEntry(entry)}
-                    className="bg-white rounded-xl p-4 flex items-center gap-3 w-full text-left hover:shadow-md transition-shadow"
-                  >
-                    <span className="text-2xl">
-                      {emotionData?.emoji ?? '😐'}
-                    </span>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-[#4A3728]">
-                        {entry.date}
-                      </p>
-                      <p className="text-xs text-[#8B7355] truncate">
-                        {entry.moment}
-                      </p>
-                    </div>
-                    <span className="text-[#B8A080] text-sm">›</span>
-                  </button>
-                );
-              })}
-          </div>
-        )}
+        {/* 성장 기록 — 선택된 나무 또는 현재 나무의 기록 (해당 월만) */}
+        {(() => {
+          const targetCycleId = selectedCycleId || useMoodStore.getState().activeCycleId;
+          const targetCycle = cycles.find((c) => c.id === targetCycleId);
+          const cycleEntries = targetCycleId
+            ? entries
+                .filter((e) => e.treeCycleId === targetCycleId)
+                .filter((e) => {
+                  const [y, m] = e.date.split('-').map(Number);
+                  return y === year && m === month;
+                })
+                .sort((a, b) => a.date.localeCompare(b.date))
+            : [];
+
+          return (
+            <>
+              <h2 className="text-sm font-semibold text-[#4A3728] mb-3">
+                🌱 {targetCycle?.harvested ? '완성된' : '현재'} 나무 성장 기록 ({cycleEntries.length}/7)
+              </h2>
+              {cycleEntries.length === 0 ? (
+                <p className="text-sm text-[#B8A080] text-center py-8">
+                  아직 기록이 없어요. 홈에서 첫 기록을 시작해보세요!
+                </p>
+              ) : (
+                <div className="flex flex-col gap-3">
+                  {cycleEntries.map((entry, idx) => {
+                    const emotionData = EMOTIONS.find(
+                      (e) => e.id === entry.emotion
+                    );
+                    return (
+                      <button
+                        key={entry.id}
+                        onClick={() => setSelectedEntry(entry)}
+                        className="bg-white rounded-xl p-4 flex items-center gap-3 w-full text-left hover:shadow-md transition-shadow"
+                      >
+                        <span className="text-2xl">
+                          {emotionData?.emoji ?? '😐'}
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-[#4A3728]">
+                            Day {idx + 1} · {entry.date}
+                          </p>
+                          <p className="text-xs text-[#8B7355] truncate">
+                            {entry.moment}
+                          </p>
+                        </div>
+                        <span className="text-[#B8A080] text-sm">›</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </>
+          );
+        })()}
       </div>
 
       {/* 상세 모달 */}

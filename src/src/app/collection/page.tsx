@@ -5,9 +5,21 @@ import Image from 'next/image';
 import Layout from '@/components/layout/Layout';
 import { useMoodStore } from '@/store/useMoodStore';
 import { TREE_MAP } from '@/constants/trees';
+import { useHydration } from '@/store/useHydration';
 
 export default function CollectionPage() {
+  const hydrated = useHydration();
   const { collection } = useMoodStore();
+
+  if (!hydrated) {
+    return (
+      <Layout>
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="text-4xl animate-pulse">🌳</div>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -25,7 +37,7 @@ export default function CollectionPage() {
               return (
                 <Link
                   key={item.treeType}
-                  href={`/collection/${item.cycleIds[item.cycleIds.length - 1]}`}
+                  href={`/collection/${item.treeType}`}
                   className="bg-white rounded-2xl p-4 flex flex-col items-center gap-2 shadow-sm hover:shadow-md transition-shadow"
                 >
                   <div className="w-full h-24 flex items-center justify-center">
@@ -36,7 +48,6 @@ export default function CollectionPage() {
                   {item.count > 1 && (
                     <p className="text-xs text-[#B8A080]">× {item.count}</p>
                   )}
-                  <p className="text-xs text-[#B8A080]">{item.unlockedAt}</p>
                 </Link>
               );
             }
