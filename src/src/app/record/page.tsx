@@ -12,7 +12,7 @@ import { useMoodStore } from '@/store/useMoodStore';
 
 export default function RecordPage() {
   const router = useRouter();
-  const { addEntry, getTodayEntry } = useMoodStore();
+  const { addEntry, getTodayEntry, getActiveCycle } = useMoodStore();
   const [step, setStep] = useState(0);
   const [moment, setMoment] = useState('');
   const [emotion, setEmotion] = useState<EmotionId | null>(null);
@@ -43,7 +43,13 @@ export default function RecordPage() {
 
     // 결과 페이지에서 AI 분석을 수행
     setIsLoading(false);
-    router.push(`/result?entryId=${entry.id}`);
+    // 7일째면 완성 페이지로, 아닌면 결과 페이지로
+    const cycle = getActiveCycle();
+    if (cycle && cycle.currentDay >= 7) {
+      router.push('/complete');
+    } else {
+      router.push(`/result?entryId=${entry.id}`);
+    }
   };
 
   return (
