@@ -132,3 +132,45 @@ Q10: E — 메인은 나무고 달력은 따로 위젯
 1) 수정 요청
 2) 다음 단계로
 - 답: 다음 단계로
+
+### 2026-08-26 10:58 · STEP 06 애플리케이션 설계 · 게이트 1
+
+- 물은 것: STEP 06 애플리케이션 설계 — 계획을 확인해주세요.
+
+계획 파일: `aidlc-docs/inception/plans/application-design-plan.md`
+
+작업 내용:
+- 화면(페이지) 목록 정리
+- 화면 간 네비게이션 흐름
+- 주요 컴포넌트 트리
+- 데이터 모델 (DiaryEntry, TreeCycle, TreeCollection)
+- AI API 인터페이스 정의
+- 로컬스토리지 키 구조
+- 상태 관리 구조
+
+산출물: `inception/application-design/components.md`
+
+1) 수정 요청
+2) 다음 단계로
+- 답: 다음 단계로
+
+### 2026-08-26 10:59 · STEP 06 애플리케이션 설계 · 게이트 2
+
+- 물은 것: STEP 06 애플리케이션 설계 결과를 확인해주세요.
+
+산출물: `aidlc-docs/inception/application-design/components.md`
+
+내용:
+- 화면 7개 (홈, 감정기록, 결과, 완성, 기록/달력, 도감, 도감상세)
+- 네비게이션 흐름도
+- 컴포넌트 트리 (Layout, HomePage, RecordPage, ResultPage, CompletePage, DiaryPage, CollectionPage, CollectionDetailPage)
+- 데이터 모델 4개 (DiaryEntry, AiDailyResult, TreeCycle/AiWeeklyResult, TreeCollection)
+- 나무 8종 감정 1:1 매핑 표
+- AI API 인터페이스 (일일/주간)
+- 로컬스토리지 키 4개
+- 상태 관리 구조
+
+이 단계에서 쌓인 실수: 0건 (누적 1건)
+
+1) 수정 요청
+2) 다음 단계로
