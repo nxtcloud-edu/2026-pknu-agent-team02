@@ -10,6 +10,7 @@ interface MoodState {
   cycles: TreeCycle[];
   collection: TreeCollection[];
   activeCycleId: string | null;
+  dayOffset: number; // 개발 모드용: 날짜 오프셋
 
   // Computed
   getActiveCycle: () => TreeCycle | null;
@@ -36,8 +37,10 @@ interface MoodState {
   resetAll: () => void;
 }
 
-function getToday(): string {
-  return new Date().toISOString().split('T')[0];
+function getToday(offset: number = 0): string {
+  const d = new Date();
+  d.setDate(d.getDate() + offset);
+  return d.toISOString().split('T')[0];
 }
 
 function initializeCollection(): TreeCollection[] {
@@ -57,6 +60,7 @@ export const useMoodStore = create<MoodState>()(
       cycles: [],
       collection: initializeCollection(),
       activeCycleId: null,
+      dayOffset: 0,
 
       getActiveCycle: () => {
         const { cycles, activeCycleId } = get();
@@ -65,8 +69,8 @@ export const useMoodStore = create<MoodState>()(
       },
 
       getTodayEntry: () => {
-        const { entries } = get();
-        const today = getToday();
+        const { entries, dayOffset } = get();
+        const today = getToday(dayOffset);
         return entries.find((e) => e.date === today) || null;
       },
 
@@ -84,7 +88,7 @@ export const useMoodStore = create<MoodState>()(
       startNewCycle: () => {
         const newCycle: TreeCycle = {
           id: uuidv4(),
-          startDate: getToday(),
+          startDate: getToday(get().dayOffset),
           currentDay: 0,
           completed: false,
           harvested: false,
@@ -109,7 +113,7 @@ export const useMoodStore = create<MoodState>()(
 
         const newEntry: DiaryEntry = {
           id: uuidv4(),
-          date: getToday(),
+          date: getToday(get().dayOffset),
           moment: data.moment,
           emotion: data.emotion,
           emotionIntensity: data.emotionIntensity,
@@ -175,7 +179,7 @@ export const useMoodStore = create<MoodState>()(
               ? {
                   ...col,
                   unlocked: true,
-                  unlockedAt: col.unlockedAt || getToday(),
+                  unlockedAt: col.unlockedAt || getToday(get().dayOffset),
                   count: col.count + 1,
                   cycleIds: [...col.cycleIds, activeCycleId],
                 }
@@ -187,21 +191,7 @@ export const useMoodStore = create<MoodState>()(
 
       // Dev tools
       advanceDay: () => {
-        // 하루를 앞당기는 시뮬레이션 — 오늘 기록이 있으면 날짜를 어제로 변경
-        const { entries } = get();
-        const today = getToday();
-        const todayEntry = entries.find((e) => e.date === today);
-        if (todayEntry) {
-          // 오늘 기록의 날짜를 어제로 이동 (다음 날 기록 가능하게)
-          const yesterday = new Date();
-          yesterday.setDate(yesterday.getDate() - 1);
-          const yesterdayStr = yesterday.toISOString().split('T')[0];
-          set((state) => ({
-            entries: state.entries.map((e) =>
-              e.id === todayEntry.id ? { ...e, date: yesterdayStr } : e
-            ),
-          }));
-        }
+        set((state) => ({ dayOffset: state.dayOffset + 1 }));
       },
 
       generateTestData: () => {
@@ -251,6 +241,7 @@ export const useMoodStore = create<MoodState>()(
           cycles: [],
           collection: initializeCollection(),
           activeCycleId: null,
+          dayOffset: 0,
         });
       },
     }),

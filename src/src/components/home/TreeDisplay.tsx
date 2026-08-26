@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { getTreeStage } from '@/constants/tree-stages';
 
 interface TreeDisplayProps {
@@ -11,9 +12,14 @@ export default function TreeDisplay({ currentDay }: TreeDisplayProps) {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <div className="text-[120px] leading-none animate-bounce-slow">
-        {stage.emoji}
-      </div>
+      <Image
+        src={stage.image}
+        alt={stage.label}
+        width={150}
+        height={150}
+        className="object-contain"
+        priority
+      />
       <p className="text-sm text-[#B8A080]">{stage.label}</p>
     </div>
   );

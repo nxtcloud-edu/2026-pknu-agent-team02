@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 import { useMoodStore } from '@/store/useMoodStore';
 import { EMOTIONS } from '@/constants/emotions';
 import { getTreeStage } from '@/constants/tree-stages';
@@ -119,7 +120,7 @@ export default function ResultContent() {
         </div>
 
         <div className="flex flex-col items-center gap-3 bg-green-50 rounded-2xl p-5 w-full">
-          <span className="text-6xl">{stage.emoji}</span>
+          <Image src={stage.image} alt={stage.label} width={80} height={80} className="object-contain" />
           <p className="text-green-700 font-medium">나무가 한 단계 자랐어요!</p>
           <p className="text-sm text-green-600">
             Day {prevDay} → Day {currentDay}
