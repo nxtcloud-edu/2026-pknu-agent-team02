@@ -252,3 +252,20 @@ STEP 06(빌드와 테스트)은 전체 완료 후 마지막 한 번.
 1) 수정 요청
 2) 다음 단계로
 - 답: 다음 단계로
+- 답: Q1: A (Next.js App Router), Q2: A (Zustand)
+
+### 2026-08-26 11:10 · CONSTRUCTION foundation STEP 02 비기능 요구 · 게이트 2
+
+- 물은 것: CONSTRUCTION 단위 1(foundation) STEP 02 비기능 요구 결과를 확인해주세요.
+
+산출물 (construction/foundation/nfr-requirements/):
+- tech-stack-decisions.md — Next.js 14+ App Router, TypeScript, Tailwind CSS, Zustand, Gemini API (Route Handler), 로컬스토리지, Vercel 배포
+- nfr-requirements.md — NFR 5개 (성능, 반응형, 접근성, 보안, 유지보수)
+
+기술 스택 확정. 이제 STEP 05(코드 생성)으로 넘어가 실제 개발을 시작합니다.
+
+이 단계에서 쌓인 실수: 0건 (누적 1건)
+
+1) 수정 요청
+2) 다음 단계로
+- 답: 다음 단계로
