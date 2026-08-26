@@ -323,3 +323,22 @@ STEP 06(빌드와 테스트)은 전체 완료 후 마지막 한 번.
 1) 수정 요청
 2) 다음 단계로
 - 답: 다음 단계로
+
+### 2026-08-26 11:21 · CONSTRUCTION record-flow STEP 05 코드 생성 · 게이트 2
+
+- 물은 것: CONSTRUCTION 단위 3(record-flow) 결과를 확인해주세요.
+
+코드:
+- RecordProgress.tsx — 4단계 진행 탭 (Moment/Emotion/Reason/Insight)
+- MomentStep.tsx — 텍스트 입력
+- EmotionStep.tsx — 8개 감정 그리드 + 강도 1~5 슬라이더
+- ReasonStep.tsx — 텍스트 입력
+- InsightStep.tsx — 텍스트 입력 + 기록 완료 버튼
+- app/record/page.tsx — 4단계 플로우 조합, X 닫기 버튼
+- 빌드 성공 확인 완료
+
+이 단계에서 쌓인 실수: 0건 (누적 1건)
+
+1) 수정 요청
+2) 다음 단계로
+- 답: 다음 단계로
