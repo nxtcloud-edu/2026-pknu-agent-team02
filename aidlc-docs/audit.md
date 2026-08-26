@@ -218,3 +218,20 @@ STEP 06(빌드와 테스트)은 전체 완료 후 마지막 한 번.
 1) 수정 요청
 2) 다음 단계로
 - 답: 다음 단계로
+
+### 2026-08-26 11:05 · CONSTRUCTION foundation STEP 01 기능 설계 · 게이트 1
+
+- 물은 것: CONSTRUCTION 단위 1(foundation) STEP 01 기능 설계 — 계획을 확인해주세요.
+
+계획 파일: `construction/plans/foundation-functional-design-plan.md`
+
+작업 내용:
+- 라우팅 구조 및 규칙 정의
+- 하단 네비게이션 동작 규칙
+- 레이아웃 구성 규칙
+- 헤더 위젯 아이콘 동작 규칙
+
+산출물: business-logic-model.md, business-rules.md, domain-entities.md, frontend-components.md
+
+1) 수정 요청
+2) 다음 단계로
