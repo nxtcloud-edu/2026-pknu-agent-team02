@@ -175,3 +175,46 @@ Q10: E — 메인은 나무고 달력은 따로 위젯
 1) 수정 요청
 2) 다음 단계로
 - 답: 다음 단계로
+
+### 2026-08-26 11:02 · STEP 07 작업 단위 쪼개기 · 게이트 1
+
+- 물은 것: STEP 07 작업 단위 쪼개기 — 계획을 확인해주세요.
+
+계획 파일: `aidlc-docs/inception/plans/unit-of-work-plan.md`
+
+작업 내용:
+- Phase별 단위 이름 결정
+- 단위별 범위 (포함 컴포넌트, 데이터, 기능) 정의
+- 단위 간 의존 순서 확인
+- 각 단위에서 실행할 CONSTRUCTION STEP 목록
+
+산출물: `inception/application-design/unit-of-work.md`
+
+1) 수정 요청
+2) 다음 단계로
+- 답: 다음 단계로
+
+### 2026-08-26 11:03 · STEP 07 작업 단위 쪼개기 · 게이트 2
+
+- 물은 것: STEP 07 작업 단위 쪼개기 결과를 확인해주세요.
+
+산출물: `aidlc-docs/inception/application-design/unit-of-work.md`
+
+작업 단위 7개:
+1. foundation — 프로젝트 생성, 라우팅, 레이아웃, 네비게이션 (STEP 01+02+05)
+2. home-tree — 홈 화면, 나무 7단계 성장 UI (STEP 01+05)
+3. record-flow — 감정 기록 4단계 플로우 (STEP 01+05)
+4. data-storage — 로컬스토리지 CRUD, 하루 제한, 개발 테스트 (STEP 01+05)
+5. ai-analysis — Gemini API 연동, 결과 화면 (STEP 01+05)
+6. completion-collection — 7일 완료, 도감 (STEP 01+05)
+7. calendar-polish — 달력/리스트 위젯, UI 마무리 (STEP 01+05)
+
+의존 순서: foundation → home-tree → record-flow → data-storage → ai-analysis → completion-collection → calendar-polish
+
+STEP 06(빌드와 테스트)은 전체 완료 후 마지막 한 번.
+
+이 단계에서 쌓인 실수: 0건 (누적 1건)
+
+1) 수정 요청
+2) 다음 단계로
+- 답: 다음 단계로
