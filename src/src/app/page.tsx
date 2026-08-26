@@ -6,7 +6,6 @@ import Layout from '@/components/layout/Layout';
 import TreeDisplay from '@/components/home/TreeDisplay';
 import DayProgress from '@/components/home/DayProgress';
 import RecordButton from '@/components/home/RecordButton';
-import DevTools from '@/components/home/DevTools';
 import { useMoodStore } from '@/store/useMoodStore';
 import { useHydration } from '@/store/useHydration';
 import { TREE_MAP } from '@/constants/trees';
@@ -51,6 +50,15 @@ export default function HomePage() {
   return (
     <Layout>
       <div className="flex flex-col items-center justify-center min-h-[65vh] gap-6">
+        {/* 오늘 날짜 */}
+        <p className="text-xs text-[#B8A080] mt-2">
+          {(() => {
+            const d = new Date();
+            d.setDate(d.getDate() + (useMoodStore.getState().dayOffset ?? 0));
+            return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`;
+          })()}
+        </p>
+
         {isHarvested ? (
           <>
             <p className="text-sm text-[#8B7355] mt-4">
@@ -85,8 +93,6 @@ export default function HomePage() {
           </>
         )}
       </div>
-
-      <DevTools />
     </Layout>
   );
 }

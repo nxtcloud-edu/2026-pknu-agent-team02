@@ -2,6 +2,7 @@
 
 import Header from './Header';
 import BottomNav from './BottomNav';
+import DevTools from '../home/DevTools';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -14,6 +15,7 @@ export default function Layout({ children }: LayoutProps) {
         <Header />
         <main className="px-5 pb-20">{children}</main>
         <BottomNav />
+        <DevTools />
       </div>
     </div>
   );
