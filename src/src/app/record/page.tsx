@@ -41,12 +41,9 @@ export default function RecordPage() {
       insight,
     });
 
-    // TODO: 단위 5에서 AI 분석 연동
-    // 임시로 결과 페이지로 이동
-    setTimeout(() => {
-      setIsLoading(false);
-      router.push(`/result?entryId=${entry.id}`);
-    }, 500);
+    // 결과 페이지에서 AI 분석을 수행
+    setIsLoading(false);
+    router.push(`/result?entryId=${entry.id}`);
   };
 
   return (
