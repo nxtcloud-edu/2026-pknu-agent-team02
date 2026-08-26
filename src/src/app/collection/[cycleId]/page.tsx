@@ -1,6 +1,7 @@
 'use client';
 
 import { useParams, useRouter } from 'next/navigation';
+import Image from 'next/image';
 import Layout from '@/components/layout/Layout';
 import { useMoodStore } from '@/store/useMoodStore';
 import { TREE_MAP } from '@/constants/trees';
@@ -39,7 +40,7 @@ export default function CollectionDetailPage() {
 
         {/* 나무 정보 */}
         <div className="bg-white rounded-2xl p-6 flex flex-col items-center gap-3 mb-6">
-          <span className="text-6xl">{tree?.emoji ?? '🌳'}</span>
+          <Image src={tree?.image ?? '/trees/소나무.png'} alt={tree?.name ?? '나무'} width={100} height={100} className="object-contain" />
           <h1 className="text-xl font-bold text-[#4A3728]">{tree?.name}</h1>
           <p className="text-sm text-[#8B7355]">{tree?.nameEn}</p>
           <p className="text-xs text-[#B8A080]">수확일: {cycle.startDate}</p>

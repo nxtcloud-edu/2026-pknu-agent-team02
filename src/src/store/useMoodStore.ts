@@ -34,6 +34,7 @@ interface MoodState {
   // Dev tools
   advanceDay: () => void;
   generateTestData: () => void;
+  unlockAllTrees: () => void;
   resetAll: () => void;
 }
 
@@ -232,6 +233,18 @@ export const useMoodStore = create<MoodState>()(
           cycles: state.cycles.map((c) =>
             c.id === activeCycle!.id ? { ...c, currentDay: 6 } : c
           ),
+        }));
+      },
+
+      unlockAllTrees: () => {
+        const today = getToday(get().dayOffset);
+        set((state) => ({
+          collection: state.collection.map((col) => ({
+            ...col,
+            unlocked: true,
+            unlockedAt: col.unlockedAt || today,
+            count: col.count || 1,
+          })),
         }));
       },
 

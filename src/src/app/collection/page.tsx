@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import Layout from '@/components/layout/Layout';
 import { useMoodStore } from '@/store/useMoodStore';
 import { TREE_MAP } from '@/constants/trees';
@@ -25,10 +26,12 @@ export default function CollectionPage() {
                 <Link
                   key={item.treeType}
                   href={`/collection/${item.cycleIds[item.cycleIds.length - 1]}`}
-                  className="bg-white rounded-2xl p-5 flex flex-col items-center gap-2 shadow-sm hover:shadow-md transition-shadow"
+                  className="bg-white rounded-2xl p-4 flex flex-col items-center gap-2 shadow-sm hover:shadow-md transition-shadow"
                 >
-                  <span className="text-4xl">{tree.emoji}</span>
-                  <p className="font-semibold text-[#4A3728]">{tree.name}</p>
+                  <div className="w-full h-24 flex items-center justify-center">
+                    <Image src={tree.image} alt={tree.name} width={80} height={80} className="object-contain max-h-24" />
+                  </div>
+                  <p className="font-semibold text-[#4A3728] text-sm">{tree.name}</p>
                   <p className="text-xs text-green-600">획득 완료</p>
                   {item.count > 1 && (
                     <p className="text-xs text-[#B8A080]">× {item.count}</p>
@@ -41,11 +44,12 @@ export default function CollectionPage() {
             return (
               <div
                 key={item.treeType}
-                className="bg-gray-50 rounded-2xl p-5 flex flex-col items-center gap-2 opacity-60"
+                className="bg-gray-50 rounded-2xl p-4 flex flex-col items-center gap-2 opacity-60"
               >
-                <span className="text-4xl">🔒</span>
-                <p className="font-semibold text-gray-400">???</p>
-                <p className="text-xs text-gray-400">아직 만나지 못했어요</p>
+                <div className="w-full h-24 flex items-center justify-center">
+                  <span className="text-4xl">🔒</span>
+                </div>
+                <p className="font-semibold text-gray-400 text-sm">???</p>
               </div>
             );
           })}

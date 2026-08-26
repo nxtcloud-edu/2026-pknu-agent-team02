@@ -3,7 +3,7 @@
 import { useMoodStore } from '@/store/useMoodStore';
 
 export default function DevTools() {
-  const { advanceDay, generateTestData, resetAll } = useMoodStore();
+  const { advanceDay, generateTestData, unlockAllTrees, resetAll } = useMoodStore();
 
   if (process.env.NODE_ENV !== 'development') return null;
 
@@ -21,6 +21,12 @@ export default function DevTools() {
         className="text-xs bg-yellow-200 px-3 py-1.5 rounded-lg hover:bg-yellow-300"
       >
         테스트 데이터 생성
+      </button>
+      <button
+        onClick={unlockAllTrees}
+        className="text-xs bg-green-200 px-3 py-1.5 rounded-lg hover:bg-green-300"
+      >
+        도감 전체 해금
       </button>
       <button
         onClick={resetAll}

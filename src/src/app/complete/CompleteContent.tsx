@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { useMoodStore } from '@/store/useMoodStore';
 import { TREE_MAP } from '@/constants/trees';
 import { AiWeeklyResult } from '@/store/types';
@@ -106,7 +107,7 @@ export default function CompleteContent() {
 
         {/* 나무 공개 */}
         <div className="flex flex-col items-center gap-3 bg-white rounded-2xl p-8 w-full shadow-sm">
-          <span className="text-7xl">{tree?.emoji ?? '🌳'}</span>
+          <Image src={tree?.image ?? '/trees/소나무.png'} alt={tree?.name ?? '나무'} width={120} height={120} className="object-contain" />
           <h2 className="text-2xl font-bold text-[#4A3728]">
             {tree?.name ?? weeklyResult.treeType}
           </h2>

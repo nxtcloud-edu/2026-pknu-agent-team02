@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import Image from 'next/image';
 import Layout from '@/components/layout/Layout';
 import TreeDisplay from '@/components/home/TreeDisplay';
 import DayProgress from '@/components/home/DayProgress';
@@ -57,9 +58,13 @@ export default function HomePage() {
             </p>
             <DayProgress currentDay={7} />
             <div className="flex flex-col items-center gap-2">
-              <div className="text-[120px] leading-none">
-                {harvestedTree?.emoji ?? '🌳'}
-              </div>
+              <Image
+                src={harvestedTree?.image ?? '/trees/소나무.png'}
+                alt={harvestedTree?.name ?? '나무'}
+                width={150}
+                height={150}
+                className="object-contain"
+              />
               <p className="text-sm text-[#B8A080]">{harvestedTree?.name}</p>
             </div>
             <div className="w-full max-w-xs py-4 bg-green-100 text-green-700 rounded-2xl font-medium text-center">

@@ -1,15 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+import Image from 'next/image';
 import Layout from '@/components/layout/Layout';
 import { useMoodStore } from '@/store/useMoodStore';
 import { EMOTIONS } from '@/constants/emotions';
+import { TREE_MAP } from '@/constants/trees';
 import { DiaryEntry } from '@/store/types';
 import { useHydration } from '@/store/useHydration';
 
+function getStageImage(dayInCycle: number): string {
+  if (dayInCycle <= 2) return '/trees/씨앗.png';
+  if (dayInCycle <= 4) return '/trees/새싹.png';
+  if (dayInCycle <= 6) return '/trees/묘목.png';
+  return '/trees/묘목.png';
+}
+
 export default function DiaryPage() {
   const hydrated = useHydration();
-  const { entries } = useMoodStore();
+  const { entries, cycles } = useMoodStore();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedEntry, setSelectedEntry] = useState<DiaryEntry | null>(null);
 
@@ -21,6 +30,24 @@ export default function DiaryPage() {
     const [y, m] = e.date.split('-').map(Number);
     return y === year && m === month;
   });
+
+  // 각 entry의 사이클 내 일차 계산
+  const entryDayMap = useMemo(() => {
+    const map: Record<string, { dayInCycle: number; treeType: string | null }> = {};
+    monthEntries.forEach((entry) => {
+      const cycle = cycles.find((c) => c.id === entry.treeCycleId);
+      // 같은 사이클의 모든 entry를 날짜순 정렬해서 인덱스 찾기
+      const cycleEntries = entries
+        .filter((e) => e.treeCycleId === entry.treeCycleId)
+        .sort((a, b) => a.date.localeCompare(b.date));
+      const idx = cycleEntries.findIndex((e) => e.id === entry.id);
+      map[entry.date] = {
+        dayInCycle: idx + 1,
+        treeType: cycle?.harvested ? cycle.treeType : null,
+      };
+    });
+    return map;
+  }, [monthEntries, cycles, entries]);
 
   // 기록된 날짜 Set
   const recordedDates = new Set(monthEntries.map((e) => parseInt(e.date.split('-')[2])));
@@ -77,7 +104,7 @@ export default function DiaryPage() {
           </div>
           <div className="grid grid-cols-7 gap-1">
             {Array.from({ length: firstDay }, (_, i) => (
-              <div key={`empty-${i}`} className="h-9" />
+              <div key={`empty-${i}`} className="h-12" />
             ))}
             {Array.from({ length: daysInMonth }, (_, i) => {
               const day = i + 1;
@@ -87,17 +114,45 @@ export default function DiaryPage() {
                 month === new Date().getMonth() + 1 &&
                 year === new Date().getFullYear();
 
+              const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+              const dayInfo = entryDayMap[dateStr];
+
+              // 이미지 결정
+              let stageImage: string | null = null;
+              if (dayInfo) {
+                if (dayInfo.treeType) {
+                  // 수확 완료된 사이클 → 나무 이미지
+                  const tree = TREE_MAP[dayInfo.treeType];
+                  stageImage = tree?.image ?? null;
+                } else {
+                  // 성장 중 → 단계 이미지
+                  stageImage = getStageImage(dayInfo.dayInCycle);
+                }
+              }
+
               return (
                 <div
                   key={day}
-                  className={`h-9 flex items-center justify-center rounded-full text-sm relative ${
+                  className={`h-12 flex flex-col items-center justify-between py-1 rounded-lg text-xs ${
                     isToday ? 'font-bold text-green-600' : 'text-[#4A3728]'
                   }`}
                 >
-                  {day}
-                  {hasRecord && (
-                    <span className="absolute bottom-0.5 w-1.5 h-1.5 bg-green-500 rounded-full" />
-                  )}
+                  <span>{day}</span>
+                  <div className="w-5 h-5 flex items-center justify-center">
+                    {stageImage ? (
+                      <Image
+                        src={stageImage}
+                        alt=""
+                        width={18}
+                        height={20}
+                        className="object-contain"
+                      />
+                    ) : hasRecord ? (
+                      <span className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                    ) : (
+                      <div />
+                    )}
+                  </div>
                 </div>
               );
             })}
