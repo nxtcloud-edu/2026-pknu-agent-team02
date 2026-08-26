@@ -235,3 +235,20 @@ STEP 06(빌드와 테스트)은 전체 완료 후 마지막 한 번.
 
 1) 수정 요청
 2) 다음 단계로
+- 답: 다음 단계로
+
+### 2026-08-26 11:07 · CONSTRUCTION foundation STEP 01 기능 설계 · 게이트 2
+
+- 물은 것: CONSTRUCTION 단위 1(foundation) STEP 01 기능 설계 결과를 확인해주세요.
+
+산출물 (construction/foundation/functional-design/):
+- business-logic-model.md — 앱 진입 흐름, 페이지 분류, 헤더 위젯 동작
+- business-rules.md — BR 5개 (네비 표시, 라우팅 가드, 레이아웃, 헤더, 테마 색상)
+- domain-entities.md — NavigationTab, PageMeta 구조
+- frontend-components.md — App, Layout, Header, BottomNav, 빈 페이지 7개, 라우팅 구조
+
+이 단계에서 쌓인 실수: 0건 (누적 1건)
+
+1) 수정 요청
+2) 다음 단계로
+- 답: 다음 단계로
