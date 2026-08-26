@@ -1,14 +1,26 @@
 'use client';
 
+import { useEffect } from 'react';
 import Layout from '@/components/layout/Layout';
 import TreeDisplay from '@/components/home/TreeDisplay';
 import DayProgress from '@/components/home/DayProgress';
 import RecordButton from '@/components/home/RecordButton';
+import DevTools from '@/components/home/DevTools';
+import { useMoodStore } from '@/store/useMoodStore';
 
 export default function HomePage() {
-  // TODO: 단위 4에서 Zustand store에서 가져오기
-  const currentDay = 1;
-  const isTodayCompleted = false;
+  const { getActiveCycle, getTodayEntry, startNewCycle } = useMoodStore();
+  const activeCycle = getActiveCycle();
+  const todayEntry = getTodayEntry();
+
+  useEffect(() => {
+    if (!activeCycle) {
+      startNewCycle();
+    }
+  }, [activeCycle, startNewCycle]);
+
+  const currentDay = activeCycle?.currentDay ?? 0;
+  const isTodayCompleted = !!todayEntry;
 
   return (
     <Layout>
@@ -27,6 +39,8 @@ export default function HomePage() {
           기록 완료 후 7일차가 되면 가꿔낸 나무를 수확할 수 있습니다.
         </p>
       </div>
+
+      <DevTools />
     </Layout>
   );
 }

@@ -8,9 +8,11 @@ import EmotionStep from '@/components/record/EmotionStep';
 import ReasonStep from '@/components/record/ReasonStep';
 import InsightStep from '@/components/record/InsightStep';
 import { EmotionId } from '@/constants/emotions';
+import { useMoodStore } from '@/store/useMoodStore';
 
 export default function RecordPage() {
   const router = useRouter();
+  const { addEntry, getTodayEntry } = useMoodStore();
   const [step, setStep] = useState(0);
   const [moment, setMoment] = useState('');
   const [emotion, setEmotion] = useState<EmotionId | null>(null);
@@ -19,14 +21,32 @@ export default function RecordPage() {
   const [insight, setInsight] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  // 이미 오늘 기록했으면 홈으로
+  const todayEntry = getTodayEntry();
+  if (todayEntry) {
+    router.push('/');
+    return null;
+  }
+
   const handleSubmit = async () => {
+    if (!emotion) return;
     setIsLoading(true);
-    // TODO: 단위 4에서 데이터 저장, 단위 5에서 AI 분석 연동
+
+    // 데이터 저장
+    const entry = addEntry({
+      moment,
+      emotion,
+      emotionIntensity: intensity,
+      reason,
+      insight,
+    });
+
+    // TODO: 단위 5에서 AI 분석 연동
     // 임시로 결과 페이지로 이동
     setTimeout(() => {
       setIsLoading(false);
-      router.push('/result');
-    }, 1000);
+      router.push(`/result?entryId=${entry.id}`);
+    }, 500);
   };
 
   return (
