@@ -269,3 +269,22 @@ STEP 06(빌드와 테스트)은 전체 완료 후 마지막 한 번.
 1) 수정 요청
 2) 다음 단계로
 - 답: 다음 단계로
+
+### 2026-08-26 11:16 · CONSTRUCTION foundation STEP 05 코드 생성 · 게이트 2
+
+- 물은 것: CONSTRUCTION 단위 1(foundation) STEP 05 코드 생성 결과를 확인해주세요.
+
+생성된 코드 (src/):
+- Next.js 14+ App Router 프로젝트 생성 완료
+- 의존성: zustand, uuid 설치
+- 라우팅 7개 페이지: /, /record, /result, /complete, /diary, /collection, /collection/[cycleId]
+- Layout 컴포넌트: Header + BottomNav (3탭: 홈/기록/도감)
+- 상수 파일: emotions.ts (8종), trees.ts (8종 1:1 매핑), navigation.ts
+- 글로벌 스타일: 크림/베이지/초록 테마
+- 빌드 성공 확인 완료
+
+이 단계에서 쌓인 실수: 0건 (누적 1건)
+
+1) 수정 요청
+2) 다음 단계로
+- 답: 다음 단계로
