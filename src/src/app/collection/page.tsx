@@ -44,7 +44,7 @@ export default function CollectionPage() {
                     <Image src={tree.image} alt={tree.name} width={80} height={80} className="object-contain max-h-24" />
                   </div>
                   <p className="font-semibold text-[#4A3728] text-sm">{tree.name}</p>
-                  <p className="text-xs text-green-600">획득 완료</p>
+                  <p className="text-xs text-[#6E7F67]">획득 완료</p>
                   {item.count > 1 && (
                     <p className="text-xs text-[#B8A080]">× {item.count}</p>
                   )}

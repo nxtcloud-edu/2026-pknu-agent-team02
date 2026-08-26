@@ -1,20 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDailyAnalysisPrompt } from '@/prompts/daily-analysis';
 
+function stripJsonWrapper(text: string): string {
+  // Remove <think>...</think> tags
+  let cleaned = text.replace(/<think>[\s\S]*?<\/think>/g, '');
+  // Remove ```json ... ``` code blocks
+  cleaned = cleaned.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+  return cleaned.trim();
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { moment, emotion, emotionIntensity, reason, insight } = body;
 
-    const apiKey = process.env.GEMINI_API_KEY;
+    const apiKey = process.env.GROQ_API_KEY;
     if (!apiKey) {
       return NextResponse.json(
-        { error: 'GEMINI_API_KEY not configured' },
+        { error: 'GROQ_API_KEY not configured' },
         { status: 500 }
       );
     }
 
-    const prompt = getDailyAnalysisPrompt({
+    const userPrompt = getDailyAnalysisPrompt({
       moment,
       emotion,
       emotionIntensity,
@@ -22,39 +30,48 @@ export async function POST(request: NextRequest) {
       insight,
     });
 
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: {
-            responseMimeType: 'application/json',
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: 'openai/gpt-oss-20b',
+        messages: [
+          {
+            role: 'system',
+            content: 'You are a JSON-only response bot. Return ONLY valid JSON. No markdown, no code blocks, no thinking tags, no explanation. Just pure JSON.',
           },
-        }),
-      }
-    );
+          {
+            role: 'user',
+            content: userPrompt,
+          },
+        ],
+        temperature: 0.7,
+      }),
+    });
 
     if (!response.ok) {
       const errorText = await response.text();
       return NextResponse.json(
-        { error: `Gemini API error: ${errorText}` },
+        { error: `Groq API error: ${errorText}` },
         { status: 500 }
       );
     }
 
     const data = await response.json();
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    const rawContent = data.choices?.[0]?.message?.content;
 
-    if (!text) {
+    if (!rawContent) {
       return NextResponse.json(
-        { error: 'No response from Gemini' },
+        { error: 'No response from Groq' },
         { status: 500 }
       );
     }
 
-    const result = JSON.parse(text);
+    const cleaned = stripJsonWrapper(rawContent);
+    const result = JSON.parse(cleaned);
     return NextResponse.json(result);
   } catch (error) {
     console.error('Daily analysis error:', error);

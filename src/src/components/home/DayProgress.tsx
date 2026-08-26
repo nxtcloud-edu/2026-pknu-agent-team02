@@ -15,7 +15,7 @@ export default function DayProgress({ currentDay }: DayProgressProps) {
           <div
             key={i}
             className={`h-2 flex-1 rounded-full transition-colors ${
-              i < currentDay ? 'bg-green-500' : 'bg-gray-200'
+              i < currentDay ? 'bg-[#6E7F67]' : 'bg-gray-200'
             }`}
           />
         ))}

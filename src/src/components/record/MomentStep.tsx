@@ -20,13 +20,13 @@ export default function MomentStep({ value, onChange, onNext }: MomentStepProps)
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="오늘 있었던 일을 자유롭게 적어보세요..."
-        className="w-full h-40 p-4 bg-white rounded-2xl border border-gray-100 resize-none text-[#4A3728] placeholder-[#B8A080] focus:outline-none focus:ring-2 focus:ring-green-200"
+        className="w-full h-40 p-4 bg-white rounded-2xl border border-gray-100 resize-none text-[#4A3728] placeholder-[#B8A080] focus:outline-none focus:ring-2 focus:ring-[#E6EDE3]"
       />
 
       <button
         onClick={onNext}
         disabled={!value.trim()}
-        className="w-full py-4 bg-green-500 text-white rounded-2xl font-semibold text-lg disabled:bg-gray-200 disabled:text-gray-400 transition-colors"
+        className="w-full py-4 bg-[#6E7F67] border border-[#9E9087] text-[#FFFFFF] rounded-2xl font-semibold text-lg disabled:bg-gray-200 disabled:text-gray-400 transition-colors"
       >
         다음
       </button>

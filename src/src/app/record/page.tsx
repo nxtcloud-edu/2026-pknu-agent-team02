@@ -60,10 +60,17 @@ export default function RecordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFF8F0]">
+    <div className="min-h-screen bg-[#FBF9F4]">
       <div className="max-w-[430px] mx-auto px-5 py-6">
-      {/* 닫기 버튼 */}
-      <div className="flex justify-end">
+      {/* 상단 네비 */}
+      <div className="flex justify-between items-center">
+        <button
+          onClick={() => { if (step > 0) setStep(step - 1); else router.push('/'); }}
+          className="text-lg text-[#8B7355] hover:text-[#4A3728]"
+          aria-label="이전 단계"
+        >
+          ←
+        </button>
         <button
           onClick={() => router.push('/')}
           className="text-2xl text-[#8B7355] hover:text-[#4A3728]"

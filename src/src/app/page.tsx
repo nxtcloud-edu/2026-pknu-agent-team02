@@ -75,7 +75,7 @@ export default function HomePage() {
               />
               <p className="text-sm text-[#B8A080]">{harvestedTree?.name}</p>
             </div>
-            <div className="w-full max-w-xs py-4 bg-green-100 text-green-700 rounded-2xl font-medium text-center">
+            <div className="w-full max-w-xs py-4 bg-[#E6EDE3] text-[#6E7F67] rounded-2xl font-medium text-center">
               내일부터 새 나무를 키울 수 있어요 🌱
             </div>
           </>
