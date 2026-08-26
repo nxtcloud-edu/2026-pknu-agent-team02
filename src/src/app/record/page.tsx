@@ -60,7 +60,8 @@ export default function RecordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFF8F0] px-5 py-6">
+    <div className="min-h-screen bg-[#FFF8F0]">
+      <div className="max-w-[430px] mx-auto px-5 py-6">
       {/* 닫기 버튼 */}
       <div className="flex justify-end">
         <button
@@ -110,6 +111,7 @@ export default function RecordPage() {
           isLoading={isLoading}
         />
       )}
+      </div>
     </div>
   );
 }
