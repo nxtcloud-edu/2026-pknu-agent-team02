@@ -288,3 +288,38 @@ STEP 06(빌드와 테스트)은 전체 완료 후 마지막 한 번.
 1) 수정 요청
 2) 다음 단계로
 - 답: 다음 단계로
+
+### 2026-08-26 11:17 · CONSTRUCTION home-tree STEP 01 기능 설계 · 게이트 1
+
+- 물은 것: CONSTRUCTION 단위 2(home-tree) STEP 01 기능 설계 — 계획을 확인해주세요.
+
+계획 파일: `construction/plans/home-tree-functional-design-plan.md`
+
+작업: 나무 7단계 성장, Day 진행 규칙, 기록 완료 UI 전환, 기록하기 버튼 동작
+
+사용자가 빠른 진행을 요청했으므로 게이트 1과 함께 생성까지 진행합니다.
+
+1) 수정 요청
+2) 다음 단계로
+
+### 2026-08-26 11:19 · CONSTRUCTION home-tree STEP 05 코드 생성 · 게이트 2
+
+- 물은 것: CONSTRUCTION 단위 2(home-tree) STEP 01 + STEP 05 결과를 확인해주세요.
+
+기능 설계:
+- business-rules.md — 나무 7단계, Day 진행, 기록 완료 UI 전환, 메시지 규칙
+- frontend-components.md — TreeDisplay, DayProgress, RecordButton
+
+코드:
+- constants/tree-stages.ts — 7단계 이모지+라벨 매핑
+- components/home/TreeDisplay.tsx — 나무 이미지 표시
+- components/home/DayProgress.tsx — Day N/7 + 진행 바
+- components/home/RecordButton.tsx — 기록하기 버튼 / 완료 상태
+- app/page.tsx — 실제 홈 화면 조합
+- 빌드 성공 확인 완료
+
+이 단계에서 쌓인 실수: 0건 (누적 1건)
+
+1) 수정 요청
+2) 다음 단계로
+- 답: 다음 단계로
