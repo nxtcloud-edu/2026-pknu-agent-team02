@@ -15,9 +15,9 @@ export default function RecordProgress({ currentStep }: RecordProgressProps) {
             key={step}
             className={`text-xs font-medium px-3 py-1.5 rounded-full transition-colors ${
               i === currentStep
-                ? 'bg-green-500 text-white'
+                ? 'bg-[#6E7F67] text-white'
                 : i < currentStep
-                ? 'bg-green-100 text-green-700'
+                ? 'bg-[#E6EDE3] text-[#6E7F67]'
                 : 'bg-gray-100 text-gray-400'
             }`}
             disabled
@@ -26,7 +26,7 @@ export default function RecordProgress({ currentStep }: RecordProgressProps) {
           </button>
         ))}
       </div>
-      <p className="text-center text-sm text-[#8B7355]">
+      <p className="text-center text-sm text-[#9E9087]">
         {currentStep + 1} / {STEPS.length}
       </p>
     </div>

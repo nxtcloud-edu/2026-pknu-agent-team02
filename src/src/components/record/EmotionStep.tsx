@@ -34,7 +34,7 @@ export default function EmotionStep({
             onClick={() => onSelectEmotion(emotion.id)}
             className={`flex flex-col items-center gap-1 p-3 rounded-xl transition-all ${
               selectedEmotion === emotion.id
-                ? 'bg-green-100 ring-2 ring-green-500 scale-105'
+                ? 'bg-[#E6EDE3] ring-2 ring-[#6E7F67] scale-105'
                 : 'bg-white hover:bg-gray-50'
             }`}
           >
@@ -56,14 +56,14 @@ export default function EmotionStep({
             max={5}
             value={intensity}
             onChange={(e) => onChangeIntensity(Number(e.target.value))}
-            className="w-full accent-green-500"
+            className="w-full accent-[#6E7F67]"
           />
           <div className="flex justify-between text-xs text-[#B8A080]">
             <span>1 약함</span>
             <span>3 보통</span>
             <span>5 매우 강함</span>
           </div>
-          <p className="text-center text-lg font-semibold text-green-600">
+          <p className="text-center text-lg font-semibold text-[#6E7F67]">
             {intensity}
           </p>
         </div>
@@ -72,7 +72,7 @@ export default function EmotionStep({
       <button
         onClick={onNext}
         disabled={!selectedEmotion}
-        className="w-full py-4 bg-green-500 text-white rounded-2xl font-semibold text-lg disabled:bg-gray-200 disabled:text-gray-400 transition-colors"
+        className="w-full py-4 bg-[#6E7F67] border border-[#9E9087] text-[#FFFFFF] rounded-2xl font-semibold text-lg disabled:bg-gray-200 disabled:text-gray-400 transition-colors"
       >
         다음
       </button>

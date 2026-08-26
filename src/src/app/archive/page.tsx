@@ -29,7 +29,7 @@ export default function ArchivePage() {
 
   if (!hydrated) {
     return (
-      <div className="min-h-screen bg-[#FFF8F0] flex items-center justify-center">
+      <div className="min-h-screen bg-[#FBF9F4] flex items-center justify-center">
         <div className="text-4xl animate-pulse">📋</div>
       </div>
     );
@@ -38,7 +38,7 @@ export default function ArchivePage() {
   const monthsForYear = monthGroups[selectedYear] || {};
 
   return (
-    <div className="min-h-screen bg-[#FFF8F0] px-5 py-6">
+    <div className="min-h-screen bg-[#FBF9F4] px-5 py-6">
       <div className="max-w-[430px] mx-auto">
         {/* 헤더 */}
         <div className="flex items-center justify-between mb-6">

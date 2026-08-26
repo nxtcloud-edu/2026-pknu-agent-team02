@@ -81,7 +81,7 @@ export default function CompleteContent() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#FFF8F0] flex flex-col items-center justify-center gap-4">
+      <div className="min-h-screen bg-[#FBF9F4] flex flex-col items-center justify-center gap-4">
         <div className="text-6xl animate-pulse">🌳</div>
         <p className="text-[#8B7355]">AI가 한 주의 마음을 분석하고 있어요...</p>
       </div>
@@ -93,9 +93,9 @@ export default function CompleteContent() {
   const tree = TREE_MAP[weeklyResult.treeType];
 
   return (
-    <div className="min-h-screen bg-[#FFF8F0] px-5 py-8">
+    <div className="min-h-screen bg-[#FBF9F4] px-5 py-8">
       <div className="max-w-[430px] mx-auto flex flex-col items-center gap-6">
-        <p className="text-sm font-medium text-green-600 tracking-wide">
+        <p className="text-sm font-medium text-[#6E7F67] tracking-wide">
           7 DAYS JOURNAL COMPLETED
         </p>
 
@@ -126,7 +126,7 @@ export default function CompleteContent() {
           {weeklyResult.weeklyKeywords.map((kw, i) => (
             <span
               key={i}
-              className="px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm"
+              className="px-3 py-1 bg-[#E6EDE3] text-[#6E7F67] rounded-full text-sm"
             >
               #{kw}
             </span>
@@ -137,12 +137,12 @@ export default function CompleteContent() {
         {!harvested ? (
           <button
             onClick={handleHarvest}
-            className="w-full py-4 bg-green-500 text-white rounded-2xl font-semibold text-lg hover:bg-green-600 transition-colors"
+            className="w-full py-4 bg-[#6E7F67] text-white rounded-2xl font-semibold text-lg hover:bg-[#5a6b56] transition-colors"
           >
             🌳 나무 수확하기
           </button>
         ) : (
-          <div className="w-full py-4 bg-green-100 text-green-700 rounded-2xl font-medium text-center">
+          <div className="w-full py-4 bg-[#E6EDE3] text-[#6E7F67] rounded-2xl font-medium text-center">
             도감에 등록되었어요! 🎉
           </div>
         )}

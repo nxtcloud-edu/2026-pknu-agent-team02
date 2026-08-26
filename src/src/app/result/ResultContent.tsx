@@ -69,7 +69,7 @@ export default function ResultContent() {
 
   if (!entry) {
     return (
-      <div className="min-h-screen bg-[#FFF8F0] flex items-center justify-center">
+      <div className="min-h-screen bg-[#FBF9F4] flex items-center justify-center">
         <p className="text-[#8B7355]">기록을 찾을 수 없습니다.</p>
       </div>
     );
@@ -82,7 +82,7 @@ export default function ResultContent() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#FFF8F0] flex flex-col items-center justify-center gap-4">
+      <div className="min-h-screen bg-[#FBF9F4] flex flex-col items-center justify-center gap-4">
         <div className="text-6xl animate-pulse">🌿</div>
         <p className="text-[#8B7355]">AI가 오늘의 마음을 분석하고 있어요...</p>
       </div>
@@ -90,7 +90,7 @@ export default function ResultContent() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FFF8F0] px-5 py-8">
+    <div className="min-h-screen bg-[#FBF9F4] px-5 py-8">
       <div className="max-w-[430px] mx-auto flex flex-col items-center gap-6">
         <h1 className="text-lg font-semibold text-[#4A3728]">오늘의 정원</h1>
 
@@ -105,7 +105,7 @@ export default function ResultContent() {
           {analysis?.keywords.map((kw, i) => (
             <span
               key={i}
-              className="px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm"
+              className="px-3 py-1 bg-[#E6EDE3] text-[#6E7F67] rounded-full text-sm"
             >
               #{kw}
             </span>
@@ -119,17 +119,17 @@ export default function ResultContent() {
           </p>
         </div>
 
-        <div className="flex flex-col items-center gap-3 bg-green-50 rounded-2xl p-5 w-full">
+        <div className="flex flex-col items-center gap-3 bg-[#E6EDE3] rounded-2xl p-5 w-full">
           <Image src={stage.image} alt={stage.label} width={80} height={80} className="object-contain" />
-          <p className="text-green-700 font-medium">나무가 한 단계 자랐어요!</p>
-          <p className="text-sm text-green-600">
+          <p className="text-[#6E7F67] font-medium">나무가 한 단계 자랐어요!</p>
+          <p className="text-sm text-[#6E7F67]">
             Day {prevDay} → Day {currentDay}
           </p>
         </div>
 
         <button
           onClick={() => router.push('/')}
-          className="w-full py-4 bg-green-500 text-white rounded-2xl font-semibold text-lg"
+          className="w-full py-4 bg-[#6E7F67] text-white rounded-2xl font-semibold text-lg"
         >
           홈으로
         </button>

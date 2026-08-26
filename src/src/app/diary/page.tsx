@@ -142,8 +142,8 @@ export default function DiaryPage() {
                     if (entry) setSelectedCycleId(entry.treeCycleId);
                   }}
                   className={`h-12 flex flex-col items-center justify-between py-1 rounded-lg text-xs ${
-                    isToday ? 'font-bold text-green-600' : 'text-[#4A3728]'
-                  } ${hasRecord ? 'cursor-pointer hover:bg-green-50' : 'cursor-default'}`}
+                    isToday ? 'font-bold text-[#6E7F67]' : 'text-[#4A3728]'
+                  } ${hasRecord ? 'cursor-pointer hover:bg-[#E6EDE3]' : 'cursor-default'}`}
                 >
                   <span>{day}</span>
                   <div className="w-5 h-5 flex items-center justify-center">
@@ -156,7 +156,7 @@ export default function DiaryPage() {
                         className="object-contain"
                       />
                     ) : hasRecord ? (
-                      <span className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                      <span className="w-1.5 h-1.5 bg-[#6E7F67] rounded-full" />
                     ) : (
                       <div />
                     )}
@@ -246,7 +246,7 @@ function EntryDetailModal({
 
   return (
     <div className="fixed inset-0 bg-black/40 z-50 flex items-end justify-center">
-      <div className="bg-[#FFF8F0] rounded-t-3xl w-full max-w-[430px] max-h-[85vh] overflow-y-auto p-6 animate-slide-up">
+      <div className="bg-[#FBF9F4] rounded-t-3xl w-full max-w-[430px] max-h-[85vh] overflow-y-auto p-6 animate-slide-up">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-lg font-semibold text-[#4A3728]">
             {entry.date}의 기록
@@ -294,15 +294,15 @@ function EntryDetailModal({
         </div>
 
         {entry.aiAnalysis && (
-          <div className="bg-green-50 rounded-2xl p-4 mb-4">
-            <p className="text-xs font-medium text-green-700 mb-2">
+          <div className="bg-[#E6EDE3] rounded-2xl p-4 mb-4">
+            <p className="text-xs font-medium text-[#6E7F67] mb-2">
               AI 분석 결과
             </p>
             <div className="flex flex-wrap gap-1.5 mb-2">
               {entry.aiAnalysis.keywords.map((kw, i) => (
                 <span
                   key={i}
-                  className="px-2 py-0.5 bg-green-100 text-green-700 rounded-full text-xs"
+                  className="px-2 py-0.5 bg-[#E6EDE3] text-[#6E7F67] rounded-full text-xs"
                 >
                   #{kw}
                 </span>
@@ -316,7 +316,7 @@ function EntryDetailModal({
 
         <button
           onClick={onClose}
-          className="w-full py-3 bg-green-500 text-white rounded-2xl font-semibold mt-2"
+          className="w-full py-3 bg-[#6E7F67] text-white rounded-2xl font-semibold mt-2"
         >
           닫기
         </button>
