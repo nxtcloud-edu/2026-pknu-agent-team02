@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useMoodStore } from '@/store/useMoodStore';
 import { TREE_MAP } from '@/constants/trees';
@@ -13,10 +13,15 @@ export default function CompleteContent() {
   const [weeklyResult, setWeeklyResult] = useState<AiWeeklyResult | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [harvested, setHarvested] = useState(false);
+  const analyzedRef = useRef(false);
 
   const activeCycle = getActiveCycle();
 
   useEffect(() => {
+    // 수확 완료 후엔 리다이렉트하지 않음
+    if (harvested) return;
+
+    // 사이클이 없거나 미완료면 홈으로
     if (!activeCycle || !activeCycle.completed) {
       router.push('/');
       return;
@@ -28,6 +33,10 @@ export default function CompleteContent() {
       setIsLoading(false);
       return;
     }
+
+    // 중복 호출 방지
+    if (analyzedRef.current) return;
+    analyzedRef.current = true;
 
     const analyze = async () => {
       try {
@@ -58,12 +67,15 @@ export default function CompleteContent() {
     };
 
     analyze();
-  }, [activeCycle, completeCycle, getEntriesForCycle, router]);
+  }, [activeCycle, completeCycle, getEntriesForCycle, router, harvested]);
 
   const handleHarvest = () => {
     harvestTree();
     setHarvested(true);
-    setTimeout(() => router.push('/collection'), 1500);
+    // 수확 후 도감으로 이동
+    setTimeout(() => {
+      router.push('/collection');
+    }, 1500);
   };
 
   if (isLoading) {

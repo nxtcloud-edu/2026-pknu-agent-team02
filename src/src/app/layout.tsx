@@ -1,5 +1,12 @@
 import type { Metadata } from 'next';
+import { Manrope } from 'next/font/google';
 import './globals.css';
+
+const manrope = Manrope({
+  subsets: ['latin'],
+  variable: '--font-manrope',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: '마음 나무 - Mood Tree',
@@ -12,8 +19,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
-      <body className="antialiased bg-[#FFF8F0] text-[#4A3728]">
+    <html lang="ko" className={manrope.variable}>
+      <body className="antialiased bg-[#FFF8F0] text-[#4A3728] font-[family-name:var(--font-manrope)]">
         {children}
       </body>
     </html>

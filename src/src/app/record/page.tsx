@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import RecordProgress from '@/components/record/RecordProgress';
 import MomentStep from '@/components/record/MomentStep';
@@ -12,7 +12,7 @@ import { useMoodStore } from '@/store/useMoodStore';
 
 export default function RecordPage() {
   const router = useRouter();
-  const { addEntry, getTodayEntry, getActiveCycle } = useMoodStore();
+  const { addEntry, getTodayEntry } = useMoodStore();
   const [step, setStep] = useState(0);
   const [moment, setMoment] = useState('');
   const [emotion, setEmotion] = useState<EmotionId | null>(null);
@@ -20,17 +20,25 @@ export default function RecordPage() {
   const [reason, setReason] = useState('');
   const [insight, setInsight] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const submittedRef = useRef(false);
 
-  // 이미 오늘 기록했으면 홈으로
+  // 이미 오늘 기록했으면 홈으로 (단, 방금 제출한 경우는 제외)
   const todayEntry = getTodayEntry();
-  if (todayEntry) {
-    router.push('/');
+
+  useEffect(() => {
+    if (todayEntry && !submittedRef.current) {
+      router.push('/');
+    }
+  }, [todayEntry, router]);
+
+  if (todayEntry && !submittedRef.current) {
     return null;
   }
 
   const handleSubmit = async () => {
     if (!emotion) return;
     setIsLoading(true);
+    submittedRef.current = true;
 
     // 데이터 저장
     const entry = addEntry({
@@ -41,11 +49,10 @@ export default function RecordPage() {
       insight,
     });
 
-    // 결과 페이지에서 AI 분석을 수행
+    // addEntry 후 최신 상태에서 사이클 확인
     setIsLoading(false);
-    // 7일째면 완성 페이지로, 아닌면 결과 페이지로
-    const cycle = getActiveCycle();
-    if (cycle && cycle.currentDay >= 7) {
+    const updatedCycle = useMoodStore.getState().getActiveCycle();
+    if (updatedCycle && updatedCycle.completed) {
       router.push('/complete');
     } else {
       router.push(`/result?entryId=${entry.id}`);

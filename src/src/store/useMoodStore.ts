@@ -119,7 +119,7 @@ export const useMoodStore = create<MoodState>()(
           treeCycleId: activeCycle.id,
         };
 
-        const newDay = activeCycle.currentDay + 1;
+        const newDay = Math.min(activeCycle.currentDay + 1, 7);
 
         set((state) => ({
           entries: [...state.entries, newEntry],
@@ -181,7 +181,7 @@ export const useMoodStore = create<MoodState>()(
                 }
               : col
           ),
-          activeCycleId: null,
+          // activeCycleId 유지 — 오늘은 수확한 나무를 계속 보여줌
         }));
       },
 

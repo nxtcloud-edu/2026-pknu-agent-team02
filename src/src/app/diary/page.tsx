@@ -4,10 +4,12 @@ import { useState } from 'react';
 import Layout from '@/components/layout/Layout';
 import { useMoodStore } from '@/store/useMoodStore';
 import { EMOTIONS } from '@/constants/emotions';
+import { DiaryEntry } from '@/store/types';
 
 export default function DiaryPage() {
   const { entries } = useMoodStore();
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedEntry, setSelectedEntry] = useState<DiaryEntry | null>(null);
 
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth() + 1;
@@ -107,9 +109,10 @@ export default function DiaryPage() {
                   (e) => e.id === entry.emotion
                 );
                 return (
-                  <div
+                  <button
                     key={entry.id}
-                    className="bg-white rounded-xl p-4 flex items-center gap-3"
+                    onClick={() => setSelectedEntry(entry)}
+                    className="bg-white rounded-xl p-4 flex items-center gap-3 w-full text-left hover:shadow-md transition-shadow"
                   >
                     <span className="text-2xl">
                       {emotionData?.emoji ?? '😐'}
@@ -122,12 +125,118 @@ export default function DiaryPage() {
                         {entry.moment}
                       </p>
                     </div>
-                  </div>
+                    <span className="text-[#B8A080] text-sm">›</span>
+                  </button>
                 );
               })}
           </div>
         )}
       </div>
+
+      {/* 상세 모달 */}
+      {selectedEntry && (
+        <EntryDetailModal
+          entry={selectedEntry}
+          onClose={() => setSelectedEntry(null)}
+        />
+      )}
     </Layout>
+  );
+}
+
+function EntryDetailModal({
+  entry,
+  onClose,
+}: {
+  entry: DiaryEntry;
+  onClose: () => void;
+}) {
+  const emotionData = EMOTIONS.find((e) => e.id === entry.emotion);
+
+  return (
+    <div className="fixed inset-0 bg-black/40 z-50 flex items-end justify-center">
+      <div className="bg-[#FFF8F0] rounded-t-3xl w-full max-w-[430px] max-h-[85vh] overflow-y-auto p-6 animate-slide-up">
+        {/* 헤더 */}
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-lg font-semibold text-[#4A3728]">
+            {entry.date}의 기록
+          </h2>
+          <button
+            onClick={onClose}
+            className="text-2xl text-[#8B7355] hover:text-[#4A3728]"
+            aria-label="닫기"
+          >
+            ✕
+          </button>
+        </div>
+
+        {/* 감정 */}
+        <div className="flex items-center gap-3 mb-5">
+          <span className="text-4xl">{emotionData?.emoji ?? '😐'}</span>
+          <div>
+            <p className="font-semibold text-[#4A3728]">
+              {emotionData?.label ?? entry.emotion}
+            </p>
+            <p className="text-sm text-[#8B7355]">
+              강도 {entry.emotionIntensity}/5
+            </p>
+          </div>
+        </div>
+
+        {/* Moment */}
+        <div className="mb-4">
+          <p className="text-xs font-medium text-[#B8A080] mb-1">Moment</p>
+          <p className="text-sm text-[#4A3728] bg-white rounded-xl p-3">
+            {entry.moment}
+          </p>
+        </div>
+
+        {/* Reason */}
+        <div className="mb-4">
+          <p className="text-xs font-medium text-[#B8A080] mb-1">Reason</p>
+          <p className="text-sm text-[#4A3728] bg-white rounded-xl p-3">
+            {entry.reason}
+          </p>
+        </div>
+
+        {/* Insight */}
+        <div className="mb-4">
+          <p className="text-xs font-medium text-[#B8A080] mb-1">Insight</p>
+          <p className="text-sm text-[#4A3728] bg-white rounded-xl p-3">
+            {entry.insight}
+          </p>
+        </div>
+
+        {/* AI 분석 결과 */}
+        {entry.aiAnalysis && (
+          <div className="bg-green-50 rounded-2xl p-4 mb-4">
+            <p className="text-xs font-medium text-green-700 mb-2">
+              AI 분석 결과
+            </p>
+            <div className="flex flex-wrap gap-1.5 mb-2">
+              {entry.aiAnalysis.keywords.map((kw, i) => (
+                <span
+                  key={i}
+                  className="px-2 py-0.5 bg-green-100 text-green-700 rounded-full text-xs"
+                >
+                  #{kw}
+                </span>
+              ))}
+            </div>
+            <p className="text-sm text-[#4A3728]">
+              {entry.aiAnalysis.dailyMessage}
+            </p>
+          </div>
+        )}
+
+        {/* 닫기 버튼 */}
+        <button
+          onClick={onClose}
+          className="w-full py-3 bg-green-500 text-white rounded-2xl font-semibold mt-2"
+        >
+          닫기
+        </button>
+      </div>
+    </div>
   );
 }
