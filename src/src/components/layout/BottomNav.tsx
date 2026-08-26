@@ -5,7 +5,8 @@ import { usePathname } from 'next/navigation';
 
 const NAV_ITEMS = [
   { id: 'home', label: '홈', path: '/', icon: HouseIcon },
-  { id: 'diary', label: '기록', path: '/diary', icon: PenIcon },
+  { id: 'diary', label: '달력', path: '/diary', icon: CalendarIcon },
+  { id: 'analysis', label: '분석', path: '/analysis', icon: ChartIcon },
   { id: 'collection', label: '도감', path: '/collection', icon: BookOpenIcon },
 ];
 
@@ -101,6 +102,35 @@ function BookOpenIcon({ color }: { color: string }) {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+    </svg>
+  );
+}
+
+function CalendarIcon({ color }: { color: string }) {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect
+        x="2.5"
+        y="3.33"
+        width="15"
+        height="14.17"
+        rx="2"
+        stroke={color}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path d="M13.33 1.67V5" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M6.67 1.67V5" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M2.5 8.33H17.5" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function ChartIcon({ color }: { color: string }) {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16.67 10H13.33L11.67 17.5L8.33 2.5L6.67 10H3.33" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
